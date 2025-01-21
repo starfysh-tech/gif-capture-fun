@@ -21,7 +21,7 @@ const Index = () => {
     }
 
     const contestId = Math.random().toString(36).substring(7);
-    navigate(`/contest/${contestId}`);
+    navigate(`/contest/${contestId}`, { state: { imageUrl: gifUrl } });
   };
 
   return (

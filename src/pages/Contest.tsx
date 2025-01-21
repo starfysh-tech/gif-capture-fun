@@ -1,18 +1,20 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft } from "lucide-react";
 
 const Contest = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [caption, setCaption] = useState("");
   const [name, setName] = useState("");
   const { toast } = useToast();
   const [submissions, setSubmissions] = useState<Array<{ name: string; caption: string }>>([]);
 
-  // For demo purposes, using a placeholder image
-  const imageUrl = "https://placekitten.com/400/300";
+  const imageUrl = location.state?.imageUrl || "https://placekitten.com/400/300";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +38,15 @@ const Contest = () => {
   return (
     <div className="min-h-screen p-4 bg-[#FEF7CD]">
       <div className="max-w-3xl mx-auto space-y-8">
+        <Button
+          onClick={() => navigate('/')}
+          variant="outline"
+          className="mb-4 border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Home
+        </Button>
+
         <div className="bg-white border-4 border-[#1EAEDB] rounded-lg p-8 shadow-[8px_8px_0_0_rgba(30,174,219,0.5)]">
           <h1 className="text-4xl font-bold text-[#F97316] mb-6 animate-pulse">
             Caption This Image!
