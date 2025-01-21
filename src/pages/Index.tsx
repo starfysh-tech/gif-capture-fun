@@ -29,10 +29,10 @@ const Index = () => {
       <div className="max-w-md w-full space-y-8 bg-white border-4 border-[#1EAEDB] rounded-lg p-8 shadow-[8px_8px_0_0_rgba(30,174,219,0.5)]">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-[#F97316] mb-2 animate-pulse">
-            GIF Caption Contest!
+            Image Caption Contest!
           </h1>
           <div className="h-2 bg-[#1EAEDB] my-4" />
-          <p className="text-black font-bold">Upload a GIF and Start the Fun!</p>
+          <p className="text-black font-bold">Upload an Image and Start the Fun!</p>
           <div className="h-2 bg-[#1EAEDB] my-4" />
         </div>
 
@@ -53,7 +53,7 @@ const Index = () => {
           <GifUploader onGifSelected={handleSubmit} />
 
           <div className="text-center text-sm text-black font-bold bg-[#FEC6A1] p-4 rounded border-2 border-[#F97316]">
-            <p>✨ Supported formats: GIF ✨</p>
+            <p>✨ Supported formats: GIF, JPEG, PNG, WebP, AVIF ✨</p>
             <p>📁 Max file size: 10MB 📁</p>
           </div>
         </div>

@@ -17,10 +17,12 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.includes("gif")) {
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+    
+    if (!validImageTypes.includes(file.type)) {
       toast({
         title: "Invalid file type",
-        description: "Please upload a GIF file",
+        description: "Please upload a valid image file (GIF, JPEG, PNG, WebP, AVIF)",
         variant: "destructive",
       });
       return;
@@ -46,16 +48,21 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
   const handleUrlSubmit = useCallback(() => {
     if (!gifUrl.trim()) {
       toast({
-        title: "Please enter a GIF URL",
+        title: "Please enter an image URL",
         variant: "destructive",
       });
       return;
     }
 
-    if (!gifUrl.toLowerCase().endsWith('.gif')) {
+    const validExtensions = ['.gif', '.jpg', '.jpeg', '.png', '.webp', '.avif'];
+    const hasValidExtension = validExtensions.some(ext => 
+      gifUrl.toLowerCase().endsWith(ext)
+    );
+
+    if (!hasValidExtension) {
       toast({
         title: "Invalid URL",
-        description: "Please enter a valid GIF URL",
+        description: "Please enter a valid image URL (GIF, JPEG, PNG, WebP, AVIF)",
         variant: "destructive",
       });
       return;
@@ -69,7 +76,7 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
       <div className="relative">
         <Input
           type="file"
-          accept="image/gif"
+          accept="image/*"
           onChange={handleFileUpload}
           className="hidden"
           id="gif-upload"
@@ -82,7 +89,7 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
             <Upload className="mx-auto h-12 w-12 text-[#1EAEDB]" />
             <div className="mt-4 flex text-sm leading-6 text-black font-bold">
               <span className="relative rounded-md font-bold text-[#F97316] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#F97316] focus-within:ring-offset-2 hover:text-[#F97316]/80">
-                Upload a GIF
+                Upload an Image
               </span>
               <p className="pl-1">or drag and drop</p>
             </div>
@@ -93,7 +100,7 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
       <div className="flex space-x-2">
         <Input
           type="url"
-          placeholder="Or paste a GIF URL"
+          placeholder="Or paste an image URL"
           value={gifUrl}
           onChange={(e) => setGifUrl(e.target.value)}
           className="border-2 border-[#1EAEDB] bg-white text-black font-bold"
