@@ -36,7 +36,6 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
     }
 
     setIsUploading(true);
-    // Simulate file upload
     setTimeout(() => {
       const fakeUrl = URL.createObjectURL(file);
       onGifSelected(fakeUrl);
@@ -77,12 +76,12 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
         />
         <label
           htmlFor="gif-upload"
-          className="flex min-h-[160px] cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 px-6 py-10 transition-colors hover:border-primary"
+          className="flex min-h-[160px] cursor-pointer items-center justify-center rounded-lg border-4 border-dashed border-[#1EAEDB] px-6 py-10 transition-colors hover:border-[#F97316] bg-white"
         >
           <div className="text-center">
-            <Upload className="mx-auto h-12 w-12 text-gray-400" />
-            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-              <span className="relative rounded-md font-semibold text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:text-primary/80">
+            <Upload className="mx-auto h-12 w-12 text-[#1EAEDB]" />
+            <div className="mt-4 flex text-sm leading-6 text-black font-bold">
+              <span className="relative rounded-md font-bold text-[#F97316] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#F97316] focus-within:ring-offset-2 hover:text-[#F97316]/80">
                 Upload a GIF
               </span>
               <p className="pl-1">or drag and drop</p>
@@ -97,11 +96,13 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
           placeholder="Or paste a GIF URL"
           value={gifUrl}
           onChange={(e) => setGifUrl(e.target.value)}
+          className="border-2 border-[#1EAEDB] bg-white text-black font-bold"
         />
         <Button
           onClick={handleUrlSubmit}
           disabled={isUploading}
           variant="outline"
+          className="border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
         >
           <LinkIcon className="h-4 w-4 mr-2" />
           Submit URL
