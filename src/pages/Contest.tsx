@@ -205,7 +205,7 @@ const Contest = () => {
                   <span className="text-black font-bold">{submission.votes}</span>
                   {!votingClosed && (
                     <Button
-                      onClick
+                      onClick={() => handleVote(submission.id)}
                       variant="outline"
                       className="border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
                     >
