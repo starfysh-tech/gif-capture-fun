@@ -3,7 +3,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Share2, ThumbsUp } from "lucide-react";
 
 const Contest = () => {
   const { id } = useParams();
@@ -12,119 +12,165 @@ const Contest = () => {
   const [caption, setCaption] = useState("");
   const [name, setName] = useState("");
   const { toast } = useToast();
-  const [submissions, setSubmissions] = useState<Array<{ name: string; caption: string }>>([]);
+  const [submissions, setSubmissions] = useState<Array<{ 
+    name: string; 
+    caption: string;
+    votes: number;
+    id: string;
+  }>>([]);
 
   const imageUrl = location.state?.imageUrl || "https://placekitten.com/400/300";
 
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast({
+      title: "Totally Rad!",
+      description: "URL copied to clipboard! Share it with your homies!",
+    });
+  };
+
+  const handleVote = (submissionId: string) => {
+    setSubmissions(prev => 
+      prev.map(sub => 
+        sub.id === submissionId 
+          ? { ...sub, votes: (sub.votes || 0) + 1 }
+          : sub
+      )
+    );
+    toast({
+      title: "Cowabunga!",
+      description: "Your vote has been counted! That caption is all that!",
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!caption.trim() || !name.trim()) {
       toast({
-        title: "Please fill in all fields",
+        title: "Bogus!",
+        description: "Don't have a cow! You need to fill out both fields!",
         variant: "destructive",
       });
       return;
     }
 
-    setSubmissions([...submissions, { name, caption }]);
-    toast({
-      title: "Caption submitted!",
-      description: "Your caption has been added to the contest.",
-    });
+    const newSubmission = {
+      name,
+      caption,
+      votes: 0,
+      id: Math.random().toString(36).substring(7),
+    };
+
+    setSubmissions(prev => [...prev, newSubmission]);
     setCaption("");
+    setName("");
+    toast({
+      title: "Word Up!",
+      description: "Your caption is da bomb! Thanks for participating!",
+    });
   };
 
   return (
     <div className="min-h-screen p-4 bg-[#FEF7CD]">
       <div className="max-w-3xl mx-auto space-y-8">
-        <Button
-          onClick={() => navigate('/')}
-          variant="outline"
-          className="mb-4 border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Home
-        </Button>
+        <div className="flex justify-between items-center">
+          <Button
+            onClick={() => navigate('/')}
+            variant="outline"
+            className="border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to the Crib
+          </Button>
+
+          <Button
+            onClick={handleShare}
+            variant="outline"
+            className="border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
+          >
+            <Share2 className="h-4 w-4 mr-2" />
+            Share This Jam
+          </Button>
+        </div>
 
         <div className="bg-white border-4 border-[#1EAEDB] rounded-lg p-8 shadow-[8px_8px_0_0_rgba(30,174,219,0.5)]">
           <h1 className="text-4xl font-bold text-[#F97316] mb-6 animate-pulse">
-            Caption This Image!
+            Yo! Caption This Radical Pic!
           </h1>
-          
-          <div className="border-4 border-[#F97316] p-2 mb-8">
-            <img
-              src={imageUrl}
-              alt="Contest image"
-              className="max-w-full h-auto mx-auto"
-            />
+
+          <div className="gif-container mb-8">
+            <img src={imageUrl} alt="Contest" className="rounded-lg" />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-bold text-black mb-1 uppercase">
-                Your Name
+              <label htmlFor="name" className="block text-sm font-bold text-black mb-1">
+                Your Name (for real!)
               </label>
               <Input
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="border-2 border-[#1EAEDB] bg-white text-black font-bold"
-                placeholder="Enter your name"
+                placeholder="What's your 411?"
               />
             </div>
 
             <div>
-              <label htmlFor="caption" className="block text-sm font-bold text-black mb-1 uppercase">
-                Your Caption
+              <label htmlFor="caption" className="block text-sm font-bold text-black mb-1">
+                Your Fresh Caption
               </label>
               <Input
                 id="caption"
                 value={caption}
                 onChange={(e) => setCaption(e.target.value)}
                 className="border-2 border-[#1EAEDB] bg-white text-black font-bold"
-                placeholder="Enter your funny caption"
+                placeholder="Drop your dopest caption here!"
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full bg-[#F97316] hover:bg-[#F97316]/90 text-white font-bold py-2 px-4 border-b-4 border-[#EA580C] hover:border-[#EA580C]/90 rounded"
+              className="w-full bg-[#F97316] hover:bg-[#FEC6A1] text-white font-bold"
             >
-              Submit Caption
+              Submit Your Rad Caption!
             </Button>
           </form>
         </div>
 
         <div className="bg-white border-4 border-[#1EAEDB] rounded-lg p-8 shadow-[8px_8px_0_0_rgba(30,174,219,0.5)]">
-          <h2 className="text-2xl font-bold text-[#F97316] mb-4">
-            Submitted Captions
+          <h2 className="text-3xl font-bold text-[#F97316] mb-6">
+            Totally Awesome Captions!
           </h2>
-          
-          {submissions.length === 0 ? (
-            <p className="text-black font-bold text-center py-4">
-              No captions yet! Be the first to submit one! 🎉
-            </p>
-          ) : (
-            <div className="space-y-4">
-              {submissions.map((sub, index) => (
-                <div
-                  key={index}
-                  className="p-4 border-2 border-[#FEC6A1] rounded bg-white"
-                >
-                  <p className="font-bold text-[#F97316]">{sub.caption}</p>
-                  <p className="text-sm text-black">- {sub.name}</p>
+          <div className="space-y-4">
+            {submissions.map((submission) => (
+              <div
+                key={submission.id}
+                className="caption-card flex justify-between items-center"
+              >
+                <div>
+                  <p className="font-bold text-black">{submission.caption}</p>
+                  <p className="text-sm text-gray-600">- {submission.name}</p>
                 </div>
-              ))}
-            </div>
-          )}
+                <div className="flex items-center gap-2">
+                  <span className="text-black font-bold">{submission.votes || 0}</span>
+                  <Button
+                    onClick={() => handleVote(submission.id)}
+                    variant="outline"
+                    className="border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
+                  >
+                    <ThumbsUp className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+            {submissions.length === 0 && (
+              <p className="text-center text-gray-600">
+                No captions yet... Don't have a cow! Be the first to add one!
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-      
-      <div className="mt-8 text-center">
-        <p className="text-xs text-black">
-          🌟 Best viewed with Netscape Navigator 🌟
-        </p>
       </div>
     </div>
   );
