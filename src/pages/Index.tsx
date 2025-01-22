@@ -4,9 +4,18 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import GifUploader from "@/components/GifUploader";
 import { useNavigate } from "react-router-dom";
+import { Shuffle } from "lucide-react";
+
+const RANDOM_GIFS = [
+  "https://media.giphy.com/media/3o7aTskHEUdgCQAXde/giphy.gif",
+  "https://media.giphy.com/media/26DN81TqLPIzBlksw/giphy.gif",
+  "https://media.giphy.com/media/l0HlPwMAzh13pcZ20/giphy.gif",
+  "https://media.giphy.com/media/3o7btXv9i4Pnjb1m0w/giphy.gif"
+];
 
 const Index = () => {
   const [name, setName] = useState("");
+  const [randomGifIndex, setRandomGifIndex] = useState(0);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -21,7 +30,15 @@ const Index = () => {
     }
 
     const contestId = Math.random().toString(36).substring(7);
-    navigate(`/contest/${contestId}`, { state: { imageUrl: gifUrl } });
+    navigate(`/contest/${contestId}`, { state: { imageUrl: gifUrl, creatorName: name } });
+  };
+
+  const handleRandomGif = () => {
+    setRandomGifIndex((prev) => (prev + 1) % RANDOM_GIFS.length);
+  };
+
+  const useRandomGif = () => {
+    handleSubmit(RANDOM_GIFS[randomGifIndex]);
   };
 
   return (
@@ -50,9 +67,42 @@ const Index = () => {
             />
           </div>
 
-          <GifUploader onGifSelected={handleSubmit} />
+          {RANDOM_GIFS[randomGifIndex] && (
+            <div className="space-y-4">
+              <div className="gif-container">
+                <img 
+                  src={RANDOM_GIFS[randomGifIndex]} 
+                  alt="Random GIF" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleRandomGif}
+                  variant="outline"
+                  className="flex-1 border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
+                >
+                  <Shuffle className="h-4 w-4 mr-2" />
+                  Shuffle GIF
+                </Button>
+                <Button
+                  onClick={useRandomGif}
+                  className="flex-1 bg-[#F97316] hover:bg-[#FEC6A1] text-white font-bold"
+                >
+                  Use This Rad GIF!
+                </Button>
+              </div>
+            </div>
+          )}
 
-          <div className="text-center text-sm text-black font-bold bg-[#FEC6A1] p-4 rounded border-2 border-[#F97316]">
+          <div className="relative">
+            <div className="text-center mb-4 font-bold text-[#F97316]">
+              - OR -
+            </div>
+            <GifUploader onGifSelected={handleSubmit} />
+          </div>
+
+          <div className="text-center text-sm text-gray-600 bg-[#FEF7CD] p-4 rounded border border-[#F97316]">
             <p>✨ Word Up! We support these formats: GIF, JPEG, PNG, WebP, AVIF ✨</p>
             <p>📁 Max size: 10MB (Don't have a cow!) 📁</p>
           </div>
