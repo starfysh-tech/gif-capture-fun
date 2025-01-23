@@ -57,9 +57,13 @@ const RANDOM_GIFS = [
 
 const Index = () => {
   const [name, setName] = useState("");
-  const [randomGifIndex, setRandomGifIndex] = useState(
-    Math.floor(Math.random() * RANDOM_GIFS.length)
-  );
+  const [seenGifs, setSeenGifs] = useState<Set<number>>(new Set());
+  const [randomGifIndex, setRandomGifIndex] = useState(() => {
+    const index = Math.floor(Math.random() * RANDOM_GIFS.length);
+    setSeenGifs(new Set([index]));
+    return index;
+  });
+  
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -93,11 +97,20 @@ const Index = () => {
   };
 
   const handleRandomGif = () => {
-    let newIndex;
-    do {
-      newIndex = Math.floor(Math.random() * RANDOM_GIFS.length);
-    } while (newIndex === randomGifIndex);
-    setRandomGifIndex(newIndex);
+    const unseenIndices = Array.from(Array(RANDOM_GIFS.length).keys())
+      .filter(index => !seenGifs.has(index));
+    
+    if (unseenIndices.length === 0) {
+      // Reset when all GIFs have been seen
+      setSeenGifs(new Set());
+      const newIndex = Math.floor(Math.random() * RANDOM_GIFS.length);
+      setRandomGifIndex(newIndex);
+      setSeenGifs(new Set([newIndex]));
+    } else {
+      const randomUnseenIndex = unseenIndices[Math.floor(Math.random() * unseenIndices.length)];
+      setRandomGifIndex(randomUnseenIndex);
+      setSeenGifs(prev => new Set([...prev, randomUnseenIndex]));
+    }
   };
 
   const useRandomGif = () => {
@@ -172,10 +185,14 @@ const Index = () => {
         </div>
       </div>
       
-      <div className="mt-8 text-center">
-        <p className="text-xs text-black">
+      <div className="mt-8 text-center max-w-md">
+        <p className="text-xs text-black mb-4">
           🌟 Best viewed with Netscape Navigator! As if! 🌟
         </p>
+        <div className="text-xs text-gray-600 bg-white p-4 rounded-lg border border-[#1EAEDB]">
+          <p className="mb-2">Legal Disclaimer:</p>
+          <p>By using this Caption Contest app, you agree that all captions submitted must be appropriate for general audiences. Users are responsible for their submissions. The app reserves the right to remove inappropriate content. Winners are determined by vote count only.</p>
+        </div>
       </div>
     </div>
   );
