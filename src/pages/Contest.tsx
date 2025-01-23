@@ -7,7 +7,9 @@ import { CaptionSubmission } from "@/components/contest/CaptionSubmission";
 import { CaptionList } from "@/components/contest/CaptionList";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 
+type Contest = Database['public']['Tables']['contests']['Row'];
 type Submission = {
   name: string;
   caption: string;
@@ -53,7 +55,7 @@ const Contest = () => {
       }
 
       setImageUrl(contest.image_url);
-      setVotingClosed(contest.is_voting_closed);
+      setVotingClosed(contest.is_voting_closed ?? false);
     };
 
     fetchContest();
@@ -69,9 +71,9 @@ const Contest = () => {
           table: "contests",
           filter: `id=eq.${id}`,
         },
-        (payload) => {
+        (payload: { new: Contest }) => {
           if (payload.new) {
-            setVotingClosed(payload.new.is_voting_closed);
+            setVotingClosed(payload.new.is_voting_closed ?? false);
           }
         }
       )
