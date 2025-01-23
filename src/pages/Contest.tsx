@@ -73,7 +73,7 @@ const Contest = () => {
           filter: `id=eq.${id}`,
         },
         (payload: RealtimePostgresChangesPayload<Contest>) => {
-          if (payload.new) {
+          if (payload.new && 'is_voting_closed' in payload.new) {
             setVotingClosed(payload.new.is_voting_closed ?? false);
           }
         }
