@@ -9,7 +9,91 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      captions: {
+        Row: {
+          caption: string
+          contest_id: string | null
+          created_at: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          caption: string
+          contest_id?: string | null
+          created_at?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          caption?: string
+          contest_id?: string | null
+          created_at?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "captions_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contests: {
+        Row: {
+          created_at: string | null
+          creator_name: string
+          id: string
+          image_url: string
+          is_voting_closed: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          creator_name: string
+          id?: string
+          image_url: string
+          is_voting_closed?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          creator_name?: string
+          id?: string
+          image_url?: string
+          is_voting_closed?: boolean | null
+        }
+        Relationships: []
+      }
+      votes: {
+        Row: {
+          caption_id: string | null
+          created_at: string | null
+          id: string
+          voter_id: string
+        }
+        Insert: {
+          caption_id?: string | null
+          created_at?: string | null
+          id?: string
+          voter_id: string
+        }
+        Update: {
+          caption_id?: string | null
+          created_at?: string | null
+          id?: string
+          voter_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votes_caption_id_fkey"
+            columns: ["caption_id"]
+            isOneToOne: false
+            referencedRelation: "captions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

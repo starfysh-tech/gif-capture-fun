@@ -53,3 +53,22 @@
 .caption-card {
   @apply p-4 rounded-lg border bg-white shadow-sm transition-all hover:shadow-md;
 }
+
+/* Toast positioning and styling */
+[role="toast-container"] {
+  @apply fixed top-4 right-4 flex flex-col gap-2 w-full max-w-sm z-50;
+}
+
+[role="toast"] {
+  @apply bg-[#FEC6A1] text-black border-2 border-[#1EAEDB] shadow-lg rounded-lg;
+  animation: slide-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

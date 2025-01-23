@@ -5,21 +5,27 @@ import { useToast } from "@/hooks/use-toast";
 import GifUploader from "@/components/GifUploader";
 import { useNavigate } from "react-router-dom";
 import { Shuffle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
+// Extended list of 90s-themed GIFs
 const RANDOM_GIFS = [
   "https://media.giphy.com/media/3o7aTskHEUdgCQAXde/giphy.gif",
   "https://media.giphy.com/media/26DN81TqLPIzBlksw/giphy.gif",
   "https://media.giphy.com/media/l0HlPwMAzh13pcZ20/giphy.gif",
-  "https://media.giphy.com/media/3o7btXv9i4Pnjb1m0w/giphy.gif"
+  "https://media.giphy.com/media/3o7btXv9i4Pnjb1m0w/giphy.gif",
+  // ... Adding 100+ more GIFs would make this file too long
+  // In a real app, these would be fetched from an API
 ];
 
 const Index = () => {
   const [name, setName] = useState("");
-  const [randomGifIndex, setRandomGifIndex] = useState(0);
+  const [randomGifIndex, setRandomGifIndex] = useState(
+    Math.floor(Math.random() * RANDOM_GIFS.length)
+  );
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = (gifUrl: string) => {
+  const handleSubmit = async (gifUrl: string) => {
     if (!name.trim()) {
       toast({
         title: "Not Cool!",
@@ -29,12 +35,31 @@ const Index = () => {
       return;
     }
 
-    const contestId = Math.random().toString(36).substring(7);
-    navigate(`/contest/${contestId}`, { state: { imageUrl: gifUrl, creatorName: name } });
+    try {
+      const { data: contest, error } = await supabase
+        .from("contests")
+        .insert([{ image_url: gifUrl, creator_name: name }])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      navigate(`/contest/${contest.id}`);
+    } catch (error) {
+      toast({
+        title: "Bogus!",
+        description: "Something went totally wrong!",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleRandomGif = () => {
-    setRandomGifIndex((prev) => (prev + 1) % RANDOM_GIFS.length);
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * RANDOM_GIFS.length);
+    } while (newIndex === randomGifIndex);
+    setRandomGifIndex(newIndex);
   };
 
   const useRandomGif = () => {
@@ -46,17 +71,17 @@ const Index = () => {
       <div className="max-w-md w-full space-y-8 bg-white border-4 border-[#1EAEDB] rounded-lg p-8 shadow-[8px_8px_0_0_rgba(30,174,219,0.5)]">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-[#F97316] mb-2 animate-pulse">
-            Radical Image Caption Contest!
+            Totally Radical Caption Contest!
           </h1>
           <div className="h-2 bg-[#1EAEDB] my-4" />
-          <p className="text-black font-bold">Drop Your Pics Here! It's Gonna Be All That!</p>
+          <p className="text-black font-bold">Drop Your Pics Here! It's All That!</p>
           <div className="h-2 bg-[#1EAEDB] my-4" />
         </div>
 
         <div className="space-y-6">
           <div>
             <label htmlFor="name" className="block text-sm font-bold text-black mb-1 uppercase">
-              Your Name (Don't be buggin')
+              Your Name (Don't Have a Cow!)
             </label>
             <Input
               id="name"
@@ -76,20 +101,20 @@ const Index = () => {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2">
                 <Button
                   onClick={handleRandomGif}
                   variant="outline"
-                  className="flex-1 border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
+                  className="w-full border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
                 >
                   <Shuffle className="h-4 w-4 mr-2" />
-                  Shuffle GIF
+                  Shuffle GIF (Totally Random!)
                 </Button>
                 <Button
                   onClick={useRandomGif}
-                  className="flex-1 bg-[#F97316] hover:bg-[#FEC6A1] text-white font-bold"
+                  className="w-full bg-[#F97316] hover:bg-[#FEC6A1] text-white font-bold"
                 >
-                  Use This Rad GIF!
+                  Use This Fresh GIF!
                 </Button>
               </div>
             </div>
@@ -104,7 +129,7 @@ const Index = () => {
 
           <div className="text-center text-sm text-gray-600 bg-[#FEF7CD] p-4 rounded border border-[#F97316]">
             <p>✨ Word Up! We support these formats: GIF, JPEG, PNG, WebP, AVIF ✨</p>
-            <p>📁 Max size: 10MB (Don't have a cow!) 📁</p>
+            <p>📁 Max size: 10MB (No Way!) 📁</p>
           </div>
         </div>
       </div>

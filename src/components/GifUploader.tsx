@@ -21,18 +21,20 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
     
     if (!validImageTypes.includes(file.type)) {
       toast({
-        title: "Invalid file type",
-        description: "Please upload a valid image file (GIF, JPEG, PNG, WebP, AVIF)",
+        title: "Bogus File Type!",
+        description: "That's not rad! Try GIF, JPEG, PNG, WebP, or AVIF",
         variant: "destructive",
+        className: "bg-[#FEC6A1] text-black border-2 border-[#1EAEDB]",
       });
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
       toast({
-        title: "File too large",
-        description: "Maximum file size is 10MB",
+        title: "Way Too Large!",
+        description: "Keep it under 10MB, dude!",
         variant: "destructive",
+        className: "bg-[#FEC6A1] text-black border-2 border-[#1EAEDB]",
       });
       return;
     }
@@ -48,8 +50,9 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
   const handleUrlSubmit = useCallback(() => {
     if (!gifUrl.trim()) {
       toast({
-        title: "Please enter an image URL",
-        variant: "destructive",
+        title: "No Way!",
+        description: "Drop a URL first, homie!",
+        className: "bg-[#FEC6A1] text-black border-2 border-[#1EAEDB]",
       });
       return;
     }
@@ -61,9 +64,9 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
 
     if (!hasValidExtension) {
       toast({
-        title: "Invalid URL",
-        description: "Please enter a valid image URL (GIF, JPEG, PNG, WebP, AVIF)",
-        variant: "destructive",
+        title: "Not Cool!",
+        description: "That URL isn't totally rad! Try GIF, JPEG, PNG, WebP, or AVIF",
+        className: "bg-[#FEC6A1] text-black border-2 border-[#1EAEDB]",
       });
       return;
     }
@@ -89,7 +92,7 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
             <Upload className="mx-auto h-12 w-12 text-[#1EAEDB]" />
             <div className="mt-4 flex text-sm leading-6 text-black font-bold">
               <span className="relative rounded-md font-bold text-[#F97316] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#F97316] focus-within:ring-offset-2 hover:text-[#F97316]/80">
-                Upload an Image
+                Upload a Totally Rad Image
               </span>
               <p className="pl-1">or drag and drop</p>
             </div>
@@ -97,22 +100,22 @@ const GifUploader = ({ onGifSelected }: GifUploaderProps) => {
         </label>
       </div>
 
-      <div className="flex space-x-2">
+      <div className="flex flex-col space-y-2">
         <Input
           type="url"
-          placeholder="Or paste an image URL"
+          placeholder="Or paste a tubular image URL"
           value={gifUrl}
           onChange={(e) => setGifUrl(e.target.value)}
-          className="border-2 border-[#1EAEDB] bg-white text-black font-bold"
+          className="w-full border-2 border-[#1EAEDB] bg-white text-black font-bold"
         />
         <Button
           onClick={handleUrlSubmit}
           disabled={isUploading}
           variant="outline"
-          className="border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
+          className="w-full border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
         >
           <LinkIcon className="h-4 w-4 mr-2" />
-          Submit URL
+          Submit URL (It's Gonna Be All That!)
         </Button>
       </div>
     </div>
