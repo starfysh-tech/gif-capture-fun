@@ -58,10 +58,9 @@ const RANDOM_GIFS = [
 const Index = () => {
   const [name, setName] = useState("");
   const [seenGifs, setSeenGifs] = useState<Set<number>>(new Set());
-  const [randomGifIndex, setRandomGifIndex] = useState(() => {
-    const index = Math.floor(Math.random() * RANDOM_GIFS.length);
-    setSeenGifs(new Set([index]));
-    return index;
+  const [currentGifIndex, setCurrentGifIndex] = useState(() => {
+    const randomIndex = Math.floor(Math.random() * RANDOM_GIFS.length);
+    return randomIndex;
   });
   
   const { toast } = useToast();
@@ -97,24 +96,32 @@ const Index = () => {
   };
 
   const handleRandomGif = () => {
-    const unseenIndices = Array.from(Array(RANDOM_GIFS.length).keys())
-      .filter(index => !seenGifs.has(index));
-    
-    if (unseenIndices.length === 0) {
-      // Reset when all GIFs have been seen
+    // Get array of indices not yet seen
+    const availableIndices = Array.from(
+      { length: RANDOM_GIFS.length },
+      (_, i) => i
+    ).filter(index => !seenGifs.has(index));
+
+    // If we've seen all GIFs, reset the seen set and use all indices
+    if (availableIndices.length === 0) {
       setSeenGifs(new Set());
       const newIndex = Math.floor(Math.random() * RANDOM_GIFS.length);
-      setRandomGifIndex(newIndex);
+      setCurrentGifIndex(newIndex);
       setSeenGifs(new Set([newIndex]));
-    } else {
-      const randomUnseenIndex = unseenIndices[Math.floor(Math.random() * unseenIndices.length)];
-      setRandomGifIndex(randomUnseenIndex);
-      setSeenGifs(prev => new Set([...prev, randomUnseenIndex]));
+      return;
     }
+
+    // Pick a random index from available indices
+    const randomAvailableIndex = Math.floor(Math.random() * availableIndices.length);
+    const newIndex = availableIndices[randomAvailableIndex];
+    
+    // Update state
+    setCurrentGifIndex(newIndex);
+    setSeenGifs(prev => new Set([...prev, newIndex]));
   };
 
   const useRandomGif = () => {
-    handleSubmit(RANDOM_GIFS[randomGifIndex]);
+    handleSubmit(RANDOM_GIFS[currentGifIndex]);
   };
 
   return (
@@ -143,11 +150,11 @@ const Index = () => {
             />
           </div>
 
-          {RANDOM_GIFS[randomGifIndex] && (
+          {RANDOM_GIFS[currentGifIndex] && (
             <div className="space-y-4">
               <div className="gif-container">
                 <img 
-                  src={RANDOM_GIFS[randomGifIndex]} 
+                  src={RANDOM_GIFS[currentGifIndex]} 
                   alt="Random GIF" 
                   className="w-full h-full object-contain"
                 />
