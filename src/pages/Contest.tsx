@@ -8,6 +8,7 @@ import { CaptionList } from "@/components/contest/CaptionList";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 
 type Contest = Database['public']['Tables']['contests']['Row'];
 type Submission = {
@@ -71,7 +72,7 @@ const Contest = () => {
           table: "contests",
           filter: `id=eq.${id}`,
         },
-        (payload: { new: Contest }) => {
+        (payload: RealtimePostgresChangesPayload<Contest>) => {
           if (payload.new) {
             setVotingClosed(payload.new.is_voting_closed ?? false);
           }
