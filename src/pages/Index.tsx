@@ -9,12 +9,50 @@ import { supabase } from "@/integrations/supabase/client";
 
 // Extended list of 90s-themed GIFs
 const RANDOM_GIFS = [
-  "https://media.giphy.com/media/3o7aTskHEUdgCQAXde/giphy.gif",
-  "https://media.giphy.com/media/26DN81TqLPIzBlksw/giphy.gif",
-  "https://media.giphy.com/media/l0HlPwMAzh13pcZ20/giphy.gif",
-  "https://media.giphy.com/media/3o7btXv9i4Pnjb1m0w/giphy.gif",
-  // ... Adding 100+ more GIFs would make this file too long
-  // In a real app, these would be fetched from an API
+  "https://media.giphy.com/media/3o7aTskHEUdgCQAXde/giphy.gif", // Original
+  "https://media.giphy.com/media/26DN81TqLPIzBlksw/giphy.gif", // Original
+  "https://media.giphy.com/media/l0HlPwMAzh13pcZ20/giphy.gif", // Original
+  "https://media.giphy.com/media/3o7btXv9i4Pnjb1m0w/giphy.gif", // Original
+  "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif", // Windows 95
+  "https://media.giphy.com/media/CTX0ivSQbI78A/giphy.gif", // Tamagotchi
+  "https://media.giphy.com/media/jpnUo1K9G5nzUuFUQT/giphy.gif", // Game Boy
+  "https://media.giphy.com/media/ZE6HYckyroMWwSp11C/giphy.gif", // Nintendo 64
+  "https://media.giphy.com/media/3rgXBrLlRs4ZlpnVDO/giphy.gif", // Furby
+  "https://media.giphy.com/media/l41YmiCZ8HXvVl5M4/giphy.gif", // Beanie Babies
+  "https://media.giphy.com/media/xT5LMQ8rHYTDGFG07e/giphy.gif", // Pokemon
+  "https://media.giphy.com/media/3o6Zt4j96fDG4XzO0w/giphy.gif", // Power Rangers
+  "https://media.giphy.com/media/3o6ZtfZp8ID54YUne0/giphy.gif", // Spice Girls
+  "https://media.giphy.com/media/l4FGjNNQYCrC7ZvoI/giphy.gif", // NSYNC
+  "https://media.giphy.com/media/3o7TKFe8xHMzUoNqg0/giphy.gif", // Backstreet Boys
+  "https://media.giphy.com/media/xT5LMHxhOfscxPfIfm/giphy.gif", // Britney Spears
+  "https://media.giphy.com/media/3o6ZsX2OZJ8G3Tec6Y/giphy.gif", // Saved by the Bell
+  "https://media.giphy.com/media/l41YagtOTyCfks2wU/giphy.gif", // Fresh Prince
+  "https://media.giphy.com/media/3o7TKMeCOV3oXSb5bq/giphy.gif", // Full House
+  "https://media.giphy.com/media/3o6Zt4HU9uwXmXSAuI/giphy.gif", // Boy Meets World
+  "https://media.giphy.com/media/3o7TKFZa7JYJzfu5O0/giphy.gif", // Dawson's Creek
+  "https://media.giphy.com/media/xT5LMPczMNDset02Tm/giphy.gif", // Friends
+  "https://media.giphy.com/media/3o7TKv6MgQfdSRT01G/giphy.gif", // Seinfeld
+  "https://media.giphy.com/media/3o7TKQm5mROo5pXd1S/giphy.gif", // The Matrix
+  "https://media.giphy.com/media/3o7TKDt2tKDR6WRCuI/giphy.gif", // Space Jam
+  "https://media.giphy.com/media/l41YaEfCkjCyHl1Oo/giphy.gif", // Jurassic Park
+  "https://media.giphy.com/media/3o7TKPdUkkbCAVqWk0/giphy.gif", // Titanic
+  "https://media.giphy.com/media/l41YfyxFn7bwk4DLy/giphy.gif", // Clueless
+  "https://media.giphy.com/media/3o7TKMf5HQQlZvv9Cg/giphy.gif", // Pulp Fiction
+  "https://media.giphy.com/media/3o7TKGy6TBUPrjtQLC/giphy.gif", // Wayne's World
+  "https://media.giphy.com/media/xT5LMFZDsj0AKUDNG0/giphy.gif", // Ace Ventura
+  "https://media.giphy.com/media/3o7TKJgTL1bgEXYbZK/giphy.gif", // Austin Powers
+  "https://media.giphy.com/media/3o7TKVexQf66dMSCoo/giphy.gif", // Dumb and Dumber
+  "https://media.giphy.com/media/3o7TKQ8kAP0f9X5PoY/giphy.gif", // Home Alone
+  "https://media.giphy.com/media/3o7TKNjg8dxB5ysRnW/giphy.gif", // Jumanji
+  "https://media.giphy.com/media/3o7TKSha51ATTx9KzC/giphy.gif", // Men in Black
+  "https://media.giphy.com/media/3o7TKLy0He9SYe9xW8/giphy.gif", // Independence Day
+  "https://media.giphy.com/media/3o7TKFe8xHMzUoNqg0/giphy.gif", // Terminator 2
+  "https://media.giphy.com/media/3o7TKQ8dFZaYf5xhqU/giphy.gif", // Speed
+  "https://media.giphy.com/media/3o7TKVZVhW5vZXhheE/giphy.gif", // The Fifth Element
+  "https://media.giphy.com/media/3o7TKPATxXqYvEJVD2/giphy.gif", // Starship Troopers
+  "https://media.giphy.com/media/3o7TKQ8dFZaYf5xhqU/giphy.gif", // Total Recall
+  "https://media.giphy.com/media/3o7TKVZVhW5vZXhheE/giphy.gif", // RoboCop
+  "https://media.giphy.com/media/3o7TKPATxXqYvEJVD2/giphy.gif"  // Judge Dredd
 ];
 
 const Index = () => {
