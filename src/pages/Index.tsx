@@ -49,9 +49,14 @@ const Index = () => {
           </h1>
           <div className="h-2 bg-[#1EAEDB] my-4" />
           <p className="text-black font-bold mb-4">
-            Create a caption contest by either choosing a random GIF or uploading your own! 
-            Each GIF will only be shown once until you've seen them all.
+            Create your Totally Radical Caption Contest!
           </p>
+          <ol>
+            <li>Choosing a GIF or upload your own</li>
+            <li>Share the link</li>
+            <li>GIF CAPTION BATTLE!!1!</li>
+            <li>In case of a tie, Justin decides.</li>
+          </ol>
           <div className="h-2 bg-[#1EAEDB] my-4" />
         </div>
 
