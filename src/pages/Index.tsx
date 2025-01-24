@@ -5,6 +5,7 @@ import GifUploader from "@/components/GifUploader";
 import { supabase } from "@/integrations/supabase/client";
 import { RandomGifDisplay } from "@/components/gif/RandomGifDisplay";
 import { NameInput } from "@/components/gif/NameInput";
+import { NETSCAPE_GIF } from "@/components/gif/gifData";
 
 const Index = () => {
   const [name, setName] = useState("");
@@ -51,8 +52,8 @@ const Index = () => {
           <p className="text-black font-bold mb-4">
             Create your Totally Radical Caption Contest!
           </p>
-          <ol>
-            <li>Choosing a GIF or upload your own</li>
+          <ol className="list-decimal list-inside space-y-2 text-left">
+            <li>Choose a GIF or upload your own</li>
             <li>Share the link</li>
             <li>GIF CAPTION BATTLE!!1!</li>
             <li>In case of a tie, Justin decides.</li>
@@ -79,9 +80,11 @@ const Index = () => {
       </div>
       
       <div className="mt-8 text-center max-w-md">
-        <p className="text-xs text-black mb-4">
-          🌟 Best viewed with Netscape Navigator! As if! 🌟
-        </p>
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <p className="text-xs text-black">🌟 Best viewed with</p>
+          <img src={NETSCAPE_GIF} alt="Netscape Navigator" className="h-6" />
+          <p className="text-xs text-black">As if! 🌟</p>
+        </div>
         <div className="text-xs text-gray-600 bg-white p-4 rounded-lg border border-[#1EAEDB]">
           <p className="mb-2">Legal Disclaimer:</p>
           <p>By using this Caption Contest app, you agree that all captions submitted must be appropriate for general audiences. Users are responsible for their submissions. The app reserves the right to remove inappropriate content. Winners are determined by vote count only.</p>
