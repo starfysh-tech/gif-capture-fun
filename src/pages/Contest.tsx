@@ -44,6 +44,9 @@ const Contest = () => {
       description: "Your caption is in the mix",
       className: "bg-[#FEC6A1] text-black border-2 border-[#1EAEDB]",
     });
+    
+    // Fetch captions immediately after submitting to show the first caption
+    fetchCaptions();
   };
 
   const handleVote = async (submissionId: string) => {
@@ -118,13 +121,22 @@ const Contest = () => {
   return (
     <div className="min-h-screen p-4 bg-[#FEF7CD]">
       <div className="max-w-3xl mx-auto space-y-8">
-        <ContestHeader onShare={handleShare} />
+        <ContestHeader 
+          votingClosed={votingClosed} 
+          winnerName={winner?.name}
+        />
 
         <div className="bg-white border-4 border-[#1EAEDB] rounded-lg p-8 shadow-[8px_8px_0_0_rgba(30,174,219,0.5)]">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-4xl font-bold text-[#F97316]">
               Caption This Pic
             </h1>
+            <Button
+              onClick={handleShare}
+              className="bg-[#F97316] hover:bg-[#FEC6A1] text-white"
+            >
+              Share Contest
+            </Button>
           </div>
 
           <ContestImage imageUrl={imageUrl} />
