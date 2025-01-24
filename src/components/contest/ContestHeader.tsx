@@ -3,9 +3,10 @@ import { WINNER_GIF } from "@/components/gif/gifData";
 interface ContestHeaderProps {
   votingClosed: boolean;
   winnerName?: string;
+  onShare?: () => void;  // Added onShare prop to the interface
 }
 
-export const ContestHeader = ({ votingClosed, winnerName }: ContestHeaderProps) => {
+export const ContestHeader = ({ votingClosed, winnerName, onShare }: ContestHeaderProps) => {
   return (
     <div className="text-center mb-8">
       <h1 className="text-4xl font-bold text-[#F97316] mb-4 animate-pulse">
