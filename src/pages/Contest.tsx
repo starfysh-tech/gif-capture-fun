@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CaptionSubmission } from "@/components/contest/CaptionSubmission";
 import { CaptionList } from "@/components/contest/CaptionList";
@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ContestHeader } from "@/components/contest/ContestHeader";
 import { ContestImage } from "@/components/contest/ContestImage";
 import { useContestData } from "@/components/contest/useContestData";
+import { Home } from "lucide-react";
 
 const Contest = () => {
   const { id } = useParams();
@@ -121,6 +122,18 @@ const Contest = () => {
   return (
     <div className="min-h-screen p-4 bg-[#FEF7CD]">
       <div className="max-w-3xl mx-auto space-y-8">
+        <div className="flex justify-between items-center">
+          <Link to="/">
+            <Button
+              variant="outline"
+              className="border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
+            >
+              <Home className="h-4 w-4 mr-2" />
+              Back to Home
+            </Button>
+          </Link>
+        </div>
+
         <ContestHeader 
           votingClosed={votingClosed} 
           winnerName={winner?.name}
