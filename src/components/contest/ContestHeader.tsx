@@ -1,33 +1,33 @@
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Share2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
+import { WINNER_GIF } from "@/components/gif/gifData";
 
-type ContestHeaderProps = {
-  onShare: () => void;
-};
+interface ContestHeaderProps {
+  votingClosed: boolean;
+  winnerName?: string;
+}
 
-export const ContestHeader = ({ onShare }: ContestHeaderProps) => {
-  const navigate = useNavigate();
-  
+export const ContestHeader = ({ votingClosed, winnerName }: ContestHeaderProps) => {
   return (
-    <div className="flex justify-between items-center">
-      <Button
-        onClick={() => navigate("/")}
-        variant="outline"
-        className="border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Home Base
-      </Button>
-      <Button
-        onClick={onShare}
-        variant="outline"
-        className="border-2 border-[#1EAEDB] hover:bg-[#FEC6A1] text-black font-bold"
-      >
-        <Share2 className="h-4 w-4 mr-2" />
-        Share Link
-      </Button>
+    <div className="text-center mb-8">
+      <h1 className="text-4xl font-bold text-[#F97316] mb-4 animate-pulse">
+        {votingClosed ? "WINNER WINNER!" : "Caption Battle Time!"}
+      </h1>
+      {votingClosed && winnerName && (
+        <div className="space-y-4 animate-fade-in">
+          <p className="text-2xl font-bold text-[#1EAEDB]">
+            🏆 {winnerName} is like, TOTALLY AWESOME! 🏆
+          </p>
+          <img 
+            src={WINNER_GIF} 
+            alt="Winner celebration" 
+            className="mx-auto h-32 object-contain rounded-lg border-4 border-[#F97316] shadow-lg"
+          />
+        </div>
+      )}
+      {!votingClosed && (
+        <p className="text-lg text-gray-700">
+          Vote for the most RADICAL caption! (Choose wisely, dude!)
+        </p>
+      )}
     </div>
   );
 };
