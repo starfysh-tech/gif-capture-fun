@@ -3,21 +3,15 @@ import { WINNER_GIF } from "@/components/gif/gifData";
 interface ContestHeaderProps {
   votingClosed: boolean;
   winnerName?: string;
+  onShare?: () => void;
 }
 
 export const ContestHeader = ({ votingClosed, winnerName }: ContestHeaderProps) => {
-  const hasTie = () => {
-    // Logic to determine if there is a tie
-    // This could involve checking the votes of the submissions
-    // and returning true if there are multiple submissions with the highest votes
-    return false; // Placeholder return value
-  };
-
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-[#F97316] mb-4 animate-pulse">
-          Caption Battle Time!
+          {votingClosed ? "WINNER WINNER!" : "Caption Battle Time!"}
         </h1>
         {!votingClosed && (
           <p className="text-lg text-gray-700">
@@ -25,16 +19,24 @@ export const ContestHeader = ({ votingClosed, winnerName }: ContestHeaderProps) 
           </p>
         )}
       </div>
-      {votingClosed && hasTie() && (
-        <div className="flex justify-center">
-          <img src={WINNER_GIF} alt="Winner" className="max-w-[300px]" />
+
+      {votingClosed && winnerName && (
+        <div className="space-y-4">
+          <div className="text-center">
+            <p className="text-2xl font-bold text-[#1EAEDB]">
+              🏆 {winnerName} is like, TOTALLY AWESOME! 🏆
+            </p>
+          </div>
         </div>
       )}
-      {votingClosed && (
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-[#F97316] animate-bounce">
-            {winnerName} is the WINNER!
-          </h2>
+
+      {votingClosed && winnerName && (
+        <div className="flex justify-center mt-8">
+          <img 
+            src={WINNER_GIF} 
+            alt="Winner celebration" 
+            className="h-32 object-contain rounded-lg border-4 border-[#F97316] shadow-lg"
+          />
         </div>
       )}
     </div>
