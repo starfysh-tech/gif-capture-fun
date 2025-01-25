@@ -3,10 +3,9 @@ import { WINNER_GIF } from "@/components/gif/gifData";
 interface ContestHeaderProps {
   votingClosed: boolean;
   winnerName?: string;
-  onShare?: () => void;
 }
 
-export const ContestHeader = ({ votingClosed, winnerName }: ContestHeaderProps) => {
+export const ContestHeader = ({ votingClosed }: ContestHeaderProps) => {
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
@@ -19,26 +18,6 @@ export const ContestHeader = ({ votingClosed, winnerName }: ContestHeaderProps) 
           </p>
         )}
       </div>
-
-      {votingClosed && winnerName && (
-        <div className="space-y-4">
-          <div className="text-center">
-            <p className="text-2xl font-bold text-[#1EAEDB]">
-              🏆 {winnerName} is like, TOTALLY AWESOME! 🏆
-            </p>
-          </div>
-        </div>
-      )}
-
-      {votingClosed && winnerName && (
-        <div className="flex justify-center mt-8">
-          <img 
-            src={WINNER_GIF} 
-            alt="Winner celebration" 
-            className="h-32 object-contain rounded-lg border-4 border-[#F97316] shadow-lg"
-          />
-        </div>
-      )}
     </div>
   );
 };
