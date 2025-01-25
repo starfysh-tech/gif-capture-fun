@@ -81,15 +81,6 @@ export const CaptionList = ({
           No captions yet. Be the first to add one
         </p>
       )}
-
-      {winner && (
-        <div className="text-center mt-6">
-          <h3 className="text-2xl font-bold text-[#F97316]">
-            Winner: <strong>{winner.name}</strong>
-          </h3>
-          <p className="text-lg">{winner.caption}</p>
-        </div>
-      )}
     </div>
   );
 };
