@@ -4,6 +4,10 @@
 
 **URL**: https://lovable.dev/projects/4e823470-ba4c-4476-a774-471ecc27c0f9
 
+## What is this project?
+
+This is a web application for creating and participating in caption contests. Users can upload a GIF, share the contest link, and submit captions, and vote for their favorites.
+
 ## How can I edit this code?
 
 There are several ways of editing your application.
@@ -30,10 +34,10 @@ git clone <YOUR_GIT_URL>
 cd <YOUR_PROJECT_NAME>
 
 # Step 3: Install the necessary dependencies.
-npm i
+yarn install
 
 # Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+yarn dev
 ```
 
 **Edit a file directly in GitHub**
@@ -52,17 +56,17 @@ npm run dev
 
 ## What technologies are used for this project?
 
-This project is built with .
+This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+-   **Vite**: A fast build tool for modern web development.
+-   **TypeScript**: A strongly typed superset of JavaScript.
+-   **React**: A JavaScript library for building user interfaces.
+-   **shadcn-ui**: A collection of accessible and reusable UI components built with Radix UI and Tailwind CSS.
+-   **Tailwind CSS**: A utility-first CSS framework.
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/4e823470-ba4c-4476-a774-471ecc27c0f9) and click on Share -> Publish.
+Simply open [Lovable](https://lovable.dev/projects/4e823470-ba4c-4476-a774-471ecc27c0f9) and click on Share -> Publish. For more details, see the [Lovable documentation](https://docs.lovable.dev/publishing).
 
 ## I want to use a custom domain - is that possible?
 

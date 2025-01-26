@@ -52,7 +52,7 @@ const Index = () => {
           <p className="text-black font-bold mb-4 text-xl animate-bounce">
             🔥 WHOA! Create Your Most Excellent Caption Battle! 🔥
           </p>
-          <ol className="list-decimal list-inside space-y-2 text-left bg-[#FFE4B5] p-4 rounded-lg border-2 border-[#F97316] shadow-inner font-bold">
+          <ol className="list-decimal list-inside space-y-2 text-left bg-[#FFE4B5] p-4 rounded-lg border-2 border-[#F97316] shadow-inner">
             <li className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
               🎮 Pick a totally tubular GIF or upload your own (NO WAY!)
             </li>
