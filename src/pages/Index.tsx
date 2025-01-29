@@ -23,16 +23,22 @@ const Index = () => {
     }
 
     try {
+      console.log("Creating contest with GIF URL:", gifUrl);
       const { data: contest, error } = await supabase
         .from("contests")
         .insert([{ image_url: gifUrl, creator_name: name }])
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error creating contest:", error);
+        throw error;
+      }
 
+      console.log("Contest created successfully:", contest);
       navigate(`/contest/${contest.id}`);
     } catch (error) {
+      console.error("Failed to create contest:", error);
       toast({
         title: "Bogus!",
         description: "Something went totally wrong!",

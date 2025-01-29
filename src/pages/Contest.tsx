@@ -11,6 +11,8 @@ import { Home } from "lucide-react";
 
 const Contest = () => {
   const { id } = useParams();
+  console.log("Contest component mounted with ID:", id);
+  
   const { toast } = useToast();
   const {
     submissions,
