@@ -18,6 +18,7 @@ const Contest = () => {
     submissions,
     votingClosed,
     winner,
+    isTie,
     imageUrl,
     fetchCaptions,
     setVotingClosed,
@@ -139,6 +140,7 @@ const Contest = () => {
         <ContestHeader 
           votingClosed={votingClosed} 
           winnerName={winner?.name}
+          isTie={isTie}
         />
 
         <div className="bg-white border-4 border-[#1EAEDB] rounded-lg p-8 shadow-[8px_8px_0_0_rgba(30,174,219,0.5)]">

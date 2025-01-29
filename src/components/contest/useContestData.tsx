@@ -17,6 +17,7 @@ export const useContestData = (id: string | undefined) => {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [votingClosed, setVotingClosed] = useState(false);
   const [winner, setWinner] = useState<Submission | null>(null);
+  const [isTie, setIsTie] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const { toast } = useToast();
 
@@ -50,13 +51,18 @@ export const useContestData = (id: string | undefined) => {
 
     setSubmissions(formattedSubmissions);
 
-    // If voting is closed, determine the winner
-    if (votingClosed) {
-      const winningSubmission = formattedSubmissions.reduce((prev, current) => 
-        (current.votes > prev.votes) ? current : prev,
-        formattedSubmissions[0]
-      );
-      setWinner(winningSubmission);
+    // If voting is closed, determine the winner and check for ties
+    if (votingClosed && formattedSubmissions.length > 0) {
+      const maxVotes = Math.max(...formattedSubmissions.map(s => s.votes));
+      const winnersArray = formattedSubmissions.filter(s => s.votes === maxVotes);
+      
+      if (winnersArray.length > 1) {
+        setIsTie(true);
+        setWinner(winnersArray[0]); // Set any of the tied winners
+      } else {
+        setIsTie(false);
+        setWinner(winnersArray[0]);
+      }
     }
   };
 
@@ -84,7 +90,9 @@ export const useContestData = (id: string | undefined) => {
     };
 
     fetchContest();
+    fetchCaptions(); // Initial fetch
 
+    // Set up real-time subscriptions
     const channel = supabase
       .channel("contest_changes")
       .on(
@@ -98,7 +106,7 @@ export const useContestData = (id: string | undefined) => {
         (payload: RealtimePostgresChangesPayload<Contest>) => {
           if (payload.new && 'is_voting_closed' in payload.new) {
             setVotingClosed(payload.new.is_voting_closed ?? false);
-            fetchCaptions(); // Fetch captions to update winner when voting closes
+            fetchCaptions();
           }
         }
       )
@@ -136,6 +144,7 @@ export const useContestData = (id: string | undefined) => {
     submissions,
     votingClosed,
     winner,
+    isTie,
     imageUrl,
     fetchCaptions,
     setVotingClosed,

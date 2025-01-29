@@ -3,10 +3,10 @@ import { WINNER_GIF } from "@/components/gif/gifData";
 interface ContestHeaderProps {
   votingClosed: boolean;
   winnerName?: string;
-  onShare?: () => void;
+  isTie?: boolean;
 }
 
-export const ContestHeader = ({ votingClosed, winnerName }: ContestHeaderProps) => {
+export const ContestHeader = ({ votingClosed, winnerName, isTie }: ContestHeaderProps) => {
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
@@ -24,13 +24,15 @@ export const ContestHeader = ({ votingClosed, winnerName }: ContestHeaderProps) 
         <div className="space-y-4">
           <div className="text-center">
             <p className="text-2xl font-bold text-[#1EAEDB]">
-              🏆 {winnerName} is like, TOTALLY AWESOME! 🏆
+              {isTie 
+                ? "🏆 It's a tie! Everyone's TOTALLY AWESOME! 🏆"
+                : `🏆 ${winnerName} is like, TOTALLY AWESOME! 🏆`}
             </p>
           </div>
         </div>
       )}
 
-      {votingClosed && winnerName && (
+      {votingClosed && winnerName && isTie && (
         <div className="flex justify-center mt-8">
           <img 
             src={WINNER_GIF} 
