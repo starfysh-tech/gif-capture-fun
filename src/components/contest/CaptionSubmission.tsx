@@ -41,7 +41,7 @@ export const CaptionSubmission = ({ onSubmit, isVotingClosed }: CaptionSubmissio
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border-2 border-[#1EAEDB] bg-white text-black font-bold"
+          className="border-2 border-[#1EAEDB] bg-white text-black"
           placeholder="What's your 411"
         />
       </div>
@@ -54,7 +54,7 @@ export const CaptionSubmission = ({ onSubmit, isVotingClosed }: CaptionSubmissio
           id="caption"
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          className="border-2 border-[#1EAEDB] bg-white text-black font-bold"
+          className="border-2 border-[#1EAEDB] bg-white text-black"
           placeholder="Drop your caption here"
         />
       </div>

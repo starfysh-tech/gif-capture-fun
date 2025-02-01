@@ -16,7 +16,7 @@ export const NameInput = ({ value, onChange }: NameInputProps) => {
         placeholder="What's your 411?"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-2 border-[#1EAEDB] bg-white text-black font-bold"
+        className="border-2 border-[#1EAEDB] bg-white text-black"
       />
     </div>
   );
